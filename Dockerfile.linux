@@ -1,0 +1,43 @@
+FROM dockcross/manylinux2014-x64
+# https://gist.github.com/district10/c9d3e2a353b3435a5545b80bf7aba746?permalink_comment_id=4062841#gistcomment-4062841
+# https://github.com/dockcross/dockcross#dockcrossmanylinux2014-x64
+
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=Asia/Shanghai PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=1 EDITOR=vim
+RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ADD fix-yum.sh /fix-yum.sh
+# RUN bash /fix-yum.sh
+RUN yum install -y bison curl flex git git graphviz rsync htop cmake-gui \
+    the_silver_searcher sudo tmux tree unzip vim wget openssl-devel \
+    libX11-devel.x86_64 \
+    libXcursor-devel.x86_64 \
+    libXi-devel \
+    libXinerama-devel.x86_64 \
+    libXrandr-devel.x86_64 \
+    libcxx-devel.x86_64 \
+    mesa-libGLU-devel \
+    xorg-x11-server-devel \
+    && rm -rf /var/cache/yum
+
+RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod a+x /bin/jq
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+
+ENV PATH=/root/miniforge3/bin:$PATH
+RUN wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O ~/miniforge.sh && \
+    /bin/bash ~/miniforge.sh -b -p /root/miniforge3 && \
+    echo ". /root/miniforge3/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc && \
+    . /root/miniforge3/etc/profile.d/conda.sh && conda activate base && python3 -m pip install --upgrade pip
+RUN conda create -y -n py35 python=3.5
+RUN conda create -y -n py36 python=3.6
+RUN conda create -y -n py37 python=3.7
+RUN conda create -y -n py38 python=3.8
+RUN conda create -y -n py39 python=3.9
+RUN conda create -y -n py310 python=3.10
+RUN conda init bash
+
+RUN echo '#!/bin/bash\numask 0000\n"$@"' > /bin/entry.sh && chmod 777 /bin/entry.sh
+# ENTRYPOINT ["/bin/entry.sh"]
+ADD _vimrc /root/.vimrc
+
+CMD ["yes"]
