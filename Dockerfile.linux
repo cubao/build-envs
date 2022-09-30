@@ -36,8 +36,21 @@ RUN conda create -y -n py39 python=3.9
 RUN conda create -y -n py310 python=3.10
 RUN conda init bash
 
-RUN echo '#!/bin/bash\numask 0000\n"$@"' > /bin/entry.sh && chmod 777 /bin/entry.sh
-# ENTRYPOINT ["/bin/entry.sh"]
+RUN yum update && yum install -y epel-release cmake3 && \
+    yum remove -y cmake && \
+    ln -s /usr/bin/cmake3 /usr/bin/cmake && \
+    cmake --version && \
+    rm -rf /var/cache/yum && \
+    cd /tmp && \
+    wget https://github.com/Kitware/CMake/releases/download/v3.22.2/cmake-3.22.2.tar.gz && \
+    tar xvzf cmake*.tar.gz && cd cmake* && \
+    mkdir -p build && cd build && \
+    cmake .. && make -j4 && make install && \
+    cd /tmp && rm -rf * && \
+    rm -rf /var/cache/yum
+
+ADD entry.sh /bin/entry.sh
+ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
 
 CMD ["yes"]
