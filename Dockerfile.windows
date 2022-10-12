@@ -1,0 +1,8 @@
+FROM dockcross/windows-static-x64
+# https://github.com/dockcross/dockcross#dockcrosswindows-static-x64
+
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=Asia/Shanghai PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=1 EDITOR=vim
+RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+RUN apt-get update && apt-get install -y vim wget curl git htop tree tmux silversearcher-ag && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*

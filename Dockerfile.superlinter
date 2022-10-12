@@ -1,0 +1,4 @@
+FROM github/super-linter:slim-v4
+
+# https://github.com/github/super-linter/blob/main/docs/run-linter-locally.md
+ENV RUN_LOCAL=true USE_FIND_ALGORITHM=true
