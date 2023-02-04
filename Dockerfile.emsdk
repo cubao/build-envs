@@ -1,0 +1,7 @@
+FROM ghcr.io/cubao/build-env-manylinux2014-x64:v0.0.1
+
+RUN cd / && git clone https://github.com/emscripten-core/emsdk.git
+RUN cd /emsdk && ./emsdk install latest
+RUN cd /emsdk && ./emsdk activate latest && echo 'source "/emsdk/emsdk_env.sh"' >> $HOME/.bashrc
+
+CMD ["yes"]

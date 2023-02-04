@@ -37,6 +37,17 @@ docker_pull_macos:
 docker_test_macos:
 	docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_MACOS) bash
 
+DOCKER_TAG_EMSDK := ghcr.io/cubao/build-env-emsdk:v0.0.1
+docker_build_emsdk:
+	docker build -t $(DOCKER_TAG_EMSDK) -f Dockerfile.emsdk .
+	docker images $(DOCKER_TAG_EMSDK) --format "{{.Repository}}:{{.Tag}} -> {{.Size}}"
+docker_push_emsdk:
+	docker push $(DOCKER_TAG_EMSDK)
+docker_pull_emsdk:
+	docker pull $(DOCKER_TAG_EMSDK)
+docker_test_emsdk:
+	docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_EMSDK) bash
+
 DOCKER_TAG_SUPERLINTER := ghcr.io/cubao/superlinter:v0.0.1
 docker_build_superlinter:
 	docker build -t $(DOCKER_TAG_SUPERLINTER) -f Dockerfile.superlinter .
