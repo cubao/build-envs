@@ -1,7 +1,58 @@
-FROM ghcr.io/cubao/build-env-manylinux2014-x64:v0.0.1
+FROM ubuntu:22.04
+
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse\n" > /etc/apt/sources.list
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse\n" >> /etc/apt/sources.list
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse\n" >> /etc/apt/sources.list
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse\n" >> /etc/apt/sources.list
+
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=Asia/Shanghai DEBIAN_FRONTEND=noninteractive
+RUN apt-get update --allow-unauthenticated --allow-insecure-repositories
+RUN apt-get update && apt-get install -y \
+    cmake \
+    cmake-curses-gui \
+    curl \
+    git \
+    htop \
+    make \
+    rsync \
+    silversearcher-ag \
+    sudo \
+    tmux \
+    tree \
+    unzip \
+    vim \
+    wget \
+    zsh \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+RUN cd /tmp && git clone --depth 1 https://github.com/jonas/tig.git tig \
+    && cd tig && cp contrib/config.make ./ && make && make install \
+    && cd /tmp && rm -rf tig
+RUN curl -o /usr/bin/protoc https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.12.3/protoc-3.12.3-linux-x86_64.exe && chmod a+x /usr/bin/protoc
+RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod a+x /bin/jq
+
+ENV PYTHONIOENCODING=UTF-8 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1
+ENV PATH=/opt/conda/bin:$PATH
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    bash ~/miniconda.sh -b -p /opt/conda && rm ~/miniconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc && \
+    . /opt/conda/etc/profile.d/conda.sh && conda activate base && \
+    python3 -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    python3 -m pip install --upgrade pip && \
+    conda install python=3.9 && \
+    conda clean --all -y
 
 RUN cd / && git clone https://github.com/emscripten-core/emsdk.git
 RUN cd /emsdk && ./emsdk install latest
 RUN cd /emsdk && ./emsdk activate latest && echo 'source "/emsdk/emsdk_env.sh"' >> $HOME/.bashrc
 
+ADD entry.sh /bin/entry.sh
+ENTRYPOINT ["/bin/entry.sh"]
 CMD ["yes"]
