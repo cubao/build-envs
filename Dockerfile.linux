@@ -34,6 +34,7 @@ RUN conda create -y -n py37 python=3.7
 RUN conda create -y -n py38 python=3.8
 RUN conda create -y -n py39 python=3.9
 RUN conda create -y -n py310 python=3.10
+RUN conda create -y -n py311 python=3.11
 RUN conda init bash
 
 RUN yum update && yum install -y epel-release cmake3 && \
