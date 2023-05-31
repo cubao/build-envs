@@ -1,7 +1,7 @@
 all:
 	@echo nothing special
 
-DOCKER_TAG_LINUX := ghcr.io/cubao/build-env-manylinux2014-x64:v0.0.1
+DOCKER_TAG_LINUX := ghcr.io/cubao/build-env-manylinux2014-x64:v0.0.2
 docker_build_linux:
 	docker build -t $(DOCKER_TAG_LINUX) -f Dockerfile.linux .
 	docker images dockcross/manylinux2014-x64 --format "{{.Repository}}:{{.Tag}} -> {{.Size}}"
