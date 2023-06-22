@@ -34,9 +34,10 @@ RUN conda create -y -n py37 python=3.7
 RUN conda create -y -n py38 python=3.8
 RUN conda create -y -n py39 python=3.9
 RUN conda create -y -n py310 python=3.10
+RUN conda create -y -n py311 python=3.11
 RUN conda init bash
 
-RUN yum update && yum install -y epel-release cmake3 && \
+RUN yum update -y && yum install -y epel-release cmake3 && \
     yum remove -y cmake && \
     ln -s /usr/bin/cmake3 /usr/bin/cmake && \
     cmake --version && \
@@ -52,5 +53,6 @@ RUN yum update && yum install -y epel-release cmake3 && \
 ADD entry.sh /bin/entry.sh
 ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
+RUN echo "umask 0000" >> ~/.bashrc
 
 CMD ["yes"]
