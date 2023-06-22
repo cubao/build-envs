@@ -1,7 +1,16 @@
-FROM ghcr.io/cubao/build-env-manylinux2014-x64:v0.0.3
+FROM dockcross/web-wasm
 
-RUN cd / && git clone https://github.com/emscripten-core/emsdk.git
-RUN cd /emsdk && ./emsdk install latest
-RUN cd /emsdk && ./emsdk activate latest && echo 'source "/emsdk/emsdk_env.sh"' >> $HOME/.bashrc
+RUN apt-get update -y && apt install locales -y && locale-gen "en_US.UTF-8" && rm -rf /var/cache/apt
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=Asia/Shanghai PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=1 EDITOR=vim
+RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod a+x /bin/jq
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+
+ADD entry.sh /bin/entry.sh
+ENTRYPOINT ["/bin/entry.sh"]
+ADD _vimrc /root/.vimrc
+RUN echo "umask 0000" >> ~/.bashrc
 
 CMD ["yes"]
