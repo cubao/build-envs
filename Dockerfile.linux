@@ -53,5 +53,6 @@ RUN yum update -y && yum install -y epel-release cmake3 && \
 ADD entry.sh /bin/entry.sh
 ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
+RUN echo "umask 0000" >> ~/.bashrc
 
 CMD ["yes"]
