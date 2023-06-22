@@ -13,4 +13,30 @@ ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
 RUN echo "umask 0000" >> ~/.bashrc
 
+RUN apt-get update -y && apt install -y \
+    curl \
+    graphviz \
+    htop \
+    libcurl4-openssl-dev \
+    libgl1-mesa-glx \
+    libncursesw5-dev \
+    libsm6 \
+    libssl-dev \
+    libxext6 \
+    libxrender-dev \
+    libxrender1 \
+    make \
+    parallel \
+    rsync \
+    silversearcher-ag \
+    sudo \
+    tmux \
+    tree \
+    unzip \
+    vim \
+    wget \
+    zlib1g-dev \
+    zsh \
+    && rm -rf /var/cache/apt
+
 CMD ["yes"]
