@@ -1,10 +1,5 @@
 FROM ubuntu:22.04
 
-RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse\n" > /etc/apt/sources.list
-RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse\n" >> /etc/apt/sources.list
-RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse\n" >> /etc/apt/sources.list
-RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse\n" >> /etc/apt/sources.list
-
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=Asia/Shanghai DEBIAN_FRONTEND=noninteractive
 RUN apt-get update --allow-unauthenticated --allow-insecure-repositories
 RUN apt-get update && apt-get install -y \
@@ -52,7 +47,10 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 RUN cd / && git clone https://github.com/emscripten-core/emsdk.git
 RUN cd /emsdk && ./emsdk install latest
 RUN cd /emsdk && ./emsdk activate latest && echo 'source "/emsdk/emsdk_env.sh"' >> $HOME/.bashrc
+RUN echo 'umask 0000' >> $HOME/.bashrc
 
 ADD entry.sh /bin/entry.sh
 ENTRYPOINT ["/bin/entry.sh"]
+ADD _vimrc /root/.vimrc
+
 CMD ["yes"]
