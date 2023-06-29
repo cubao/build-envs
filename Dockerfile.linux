@@ -50,6 +50,8 @@ RUN yum update -y && yum install -y epel-release cmake3 && \
     cd /tmp && rm -rf * && \
     rm -rf /var/cache/yum
 
+RUN yum update -y && yum install -y SDL2-devel && rm -rf /var/cache/yum
+
 ADD entry.sh /bin/entry.sh
 ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
