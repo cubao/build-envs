@@ -1,8 +1,36 @@
-FROM FROM dorowu/ubuntu-desktop-lxde-vnc
+FROM dorowu/ubuntu-desktop-lxde-vnc
 # https://github.com/fcwu/docker-ubuntu-vnc-desktop
 
+RUN apt-get update -y && apt install locales -y && locale-gen "en_US.UTF-8" && rm -rf /var/cache/apt
 ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=Asia/Shanghai PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=1 EDITOR=vim
 RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+RUN echo -e "Acquire::AllowInsecureRepositories \"true\";\nAcquire::AllowDowngradeToInsecureRepositories \"true\";" | sudo tee /etc/apt/apt.conf.d/99allow-unsigned && \
+    apt-get update -y && apt install -y \
+    curl \
+    graphviz \
+    htop \
+    libcurl4-openssl-dev \
+    libgl1-mesa-glx \
+    libncursesw5-dev \
+    libsm6 \
+    libssl-dev \
+    libxext6 \
+    libxrender-dev \
+    libxrender1 \
+    make \
+    parallel \
+    rsync \
+    silversearcher-ag \
+    sudo \
+    tmux \
+    tree \
+    unzip \
+    vim \
+    wget \
+    zlib1g-dev \
+    zsh \
+    && rm -rf /var/cache/apt
 
 RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod a+x /bin/jq
 RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
