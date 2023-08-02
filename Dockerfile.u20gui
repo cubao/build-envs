@@ -38,12 +38,10 @@ RUN apt-get update -y && apt install -y \
     && rm -rf /var/cache/apt
 
 RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod a+x /bin/jq
-RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf && /root/.fzf/install --all
+RUN apt-get install -y libzmq3-dev && rm -rf /var/cache/apt
 
 ADD entry.sh /bin/entry.sh
 # ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
-RUN echo "umask 0000" >> ~/.bashrc
+# RUN echo "umask 0000" > /etc/profile.d/umask && chmod a+x /etc/profile.d/umask
 # /usr/local/share/doro-lxde-wallpapers/bg1.jpg
-# RUN apt-get install -y libzmq3-dev
