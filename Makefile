@@ -56,8 +56,12 @@ docker_push_u20gui:
 	docker push $(DOCKER_TAG_U20GUI)
 docker_pull_u20gui:
 	docker pull $(DOCKER_TAG_U20GUI)
+PORT ?= 6081
 docker_test_u20gui:
-	docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_U20GUI) bash
+	# docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_U20GUI) bash
+	docker run --rm -p $(PORT):80 -v /dev/shm:/dev/shm -e OPENBOX_ARGS='--startup /data/startup_command.sh' \
+		-v `pwd`:`pwd` \
+		-it $(DOCKER_TAG_U20GUI) bash -c "echo 'echo HelloWorld' > /data/startup_command.sh && chmod +x /data/startup_command.sh && (/startup.sh)"
 
 # https://stackoverflow.com/a/25817631
 echo-%  : ; @echo -n $($*)

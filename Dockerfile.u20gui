@@ -61,4 +61,7 @@ ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
 RUN echo "umask 0000" >> ~/.bashrc
 
+# /usr/local/share/doro-lxde-wallpapers/bg1.jpg
+# RUN apt-get install -y libzmq3-dev
+
 CMD ["yes"]
