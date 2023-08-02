@@ -39,7 +39,7 @@ RUN apt-get update -y && apt install -y \
 
 RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod a+x /bin/jq
 RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf && /root/.fzf/install --all
 
 ADD entry.sh /bin/entry.sh
 # ENTRYPOINT ["/bin/entry.sh"]
