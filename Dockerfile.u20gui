@@ -41,27 +41,9 @@ RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/
 RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
 
-ENV PATH=/root/miniforge3/bin:$PATH
-RUN wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O ~/miniforge.sh && \
-    /bin/bash ~/miniforge.sh -b -p /root/miniforge3 && \
-    echo ". /root/miniforge3/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc && \
-    . /root/miniforge3/etc/profile.d/conda.sh && conda activate base && python3 -m pip install --upgrade pip
-RUN conda create -y -n py35 python=3.5
-RUN conda create -y -n py36 python=3.6
-RUN conda create -y -n py37 python=3.7
-RUN conda create -y -n py38 python=3.8
-RUN conda create -y -n py39 python=3.9
-RUN conda create -y -n py310 python=3.10
-RUN conda create -y -n py311 python=3.11
-RUN conda init bash
-
 ADD entry.sh /bin/entry.sh
-ENTRYPOINT ["/bin/entry.sh"]
+# ENTRYPOINT ["/bin/entry.sh"]
 ADD _vimrc /root/.vimrc
 RUN echo "umask 0000" >> ~/.bashrc
-
 # /usr/local/share/doro-lxde-wallpapers/bg1.jpg
 # RUN apt-get install -y libzmq3-dev
-
-CMD ["yes"]
