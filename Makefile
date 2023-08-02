@@ -48,6 +48,22 @@ docker_pull_emsdk:
 docker_test_emsdk:
 	docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_EMSDK) bash
 
+DOCKER_TAG_U20GUI := ghcr.io/cubao/build-env-u20gui:v0.0.1
+docker_build_u20gui:
+	docker build -t $(DOCKER_TAG_U20GUI) -f Dockerfile.u20gui .
+	docker images $(DOCKER_TAG_U20GUI) --format "{{.Repository}}:{{.Tag}} -> {{.Size}}"
+docker_push_u20gui:
+	docker push $(DOCKER_TAG_U20GUI)
+docker_pull_u20gui:
+	docker pull $(DOCKER_TAG_U20GUI)
+PORT ?= 6081
+docker_test_u20gui:
+	# docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_U20GUI) bash
+	# -e OPENBOX_ARGS='--startup /data/startup_command.sh'
+	docker run --rm -p $(PORT):80 -v /dev/shm:/dev/shm \
+		-v `pwd`:`pwd` \
+		-it $(DOCKER_TAG_U20GUI)
+
 # https://stackoverflow.com/a/25817631
 echo-%  : ; @echo -n $($*)
 Echo-%  : ; @echo $($*)

@@ -1,0 +1,47 @@
+FROM dorowu/ubuntu-desktop-lxde-vnc
+# https://github.com/fcwu/docker-ubuntu-vnc-desktop
+
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=Asia/Shanghai DEBIAN_FRONTEND=noninteractive PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=1 EDITOR=vim
+RUN rm -rf /etc/apt/sources.list.d/google-chrome.list # RUN apt-key del 4EB27DB2A3B88B8B
+RUN apt-get update -y && apt install locales -y && locale-gen "en_US.UTF-8" && rm -rf /var/cache/apt && ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+RUN apt-get update -y && apt install -y \
+    build-essential \
+    cmake \
+    cmake-curses-gui \
+    curl \
+    g++ \
+    gdb \
+    git \
+    graphviz \
+    htop \
+    libcurl4-openssl-dev \
+    libgl1-mesa-glx \
+    libncursesw5-dev \
+    libsm6 \
+    libssl-dev \
+    libxext6 \
+    libxrender-dev \
+    libxrender1 \
+    make \
+    parallel \
+    rsync \
+    silversearcher-ag \
+    sudo \
+    tmux \
+    tree \
+    unzip \
+    vim \
+    wget \
+    zlib1g-dev \
+    zsh \
+    && rm -rf /var/cache/apt
+
+RUN curl -o /bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod a+x /bin/jq
+RUN apt-get install -y libzmq3-dev && rm -rf /var/cache/apt
+
+ADD entry.sh /bin/entry.sh
+# ENTRYPOINT ["/bin/entry.sh"]
+ADD _vimrc /root/.vimrc
+# RUN echo "umask 0000" > /etc/profile.d/umask && chmod a+x /etc/profile.d/umask
+# /usr/local/share/doro-lxde-wallpapers/bg1.jpg
