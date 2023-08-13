@@ -37,7 +37,7 @@ docker_pull_macos:
 docker_test_macos:
 	docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_MACOS) bash
 
-DOCKER_TAG_EMSDK := ghcr.io/cubao/build-env-emsdk:v0.0.1
+DOCKER_TAG_EMSDK := ghcr.io/cubao/build-env-emsdk:v0.0.2
 docker_build_emsdk:
 	docker build -t $(DOCKER_TAG_EMSDK) -f Dockerfile.emsdk .
 	docker images $(DOCKER_TAG_EMSDK) --format "{{.Repository}}:{{.Tag}} -> {{.Size}}"
