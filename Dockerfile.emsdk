@@ -39,4 +39,33 @@ RUN apt-get update -y && apt install -y \
     zsh \
     && rm -rf /var/cache/apt
 
+# headless display
+RUN apt-get update -y && apt install -y \
+    libegl1 \
+    libgl1-mesa-glx \
+    libopengl0 \
+    libosmesa6 \
+    libxcb-cursor0 \
+    libxcb-icccm4 \
+    libxcb-image0 \
+    libxcb-keysyms1 \
+    libxcb-randr0 \
+    libxcb-render-util0 \
+    libxcb-shape0 \
+    libxcb-xfixes0 \
+    libxcb-xinerama0 \
+    libxkbcommon-x11-0 \
+    mesa-utils \
+    x11-xserver-utils \
+    xvfb \
+    && rm -rf /var/cache/apt
+ENV DISPLAY=:99.0
+ENV PYVISTA_OFF_SCREEN=true
+# Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+# https://github.com/pyvista/setup-headless-display-action/blob/main/action.yml
+RUN python3 --version && pip install pyvista
+# python -c "import pyvista;pyvista.Sphere().plot(screenshot='sphere.png')"
+
+# use https://github.com/cubao/ggweb to test emsdk building
+
 CMD ["yes"]
