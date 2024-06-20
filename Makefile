@@ -13,6 +13,17 @@ docker_pull_linux:
 docker_test_linux:
 	docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_LINUX) bash
 
+DOCKER_TAG_VSCODE := ghcr.io/cubao/build-env-vscode:v0.0.1
+docker_build_vscode:
+	docker build -t $(DOCKER_TAG_VSCODE) -f Dockerfile.vscode .
+	docker images $(DOCKER_TAG_VSCODE) --format "{{.Repository}}:{{.Tag}} -> {{.Size}}"
+docker_push_vscode:
+	docker push $(DOCKER_TAG_VSCODE)
+docker_pull_vscode:
+	docker pull $(DOCKER_TAG_VSCODE)
+docker_test_vscode:
+	docker run --rm -v `pwd`:`pwd` -w `pwd` -it $(DOCKER_TAG_VSCODE) bash
+
 DOCKER_TAG_WINDOWS := ghcr.io/cubao/build-env-windows-x64:v0.0.1
 docker_build_windows:
 	docker build -t $(DOCKER_TAG_WINDOWS) -f Dockerfile.windows .
