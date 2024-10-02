@@ -41,7 +41,7 @@ RUN yum update -y && yum install -y epel-release cmake3 && \
     cmake --version && \
     rm -rf /var/cache/yum && \
     cd /tmp && \
-    wget https://github.com/Kitware/CMake/releases/download/v3.22.2/cmake-3.22.2.tar.gz && \
+    wget https://github.com/Kitware/CMake/releases/download/v3.30.4/cmake-3.30.4.tar.gz && \
     tar xvzf cmake*.tar.gz && cd cmake* && \
     mkdir -p build && cd build && \
     cmake .. && make -j4 && make install && \
