@@ -28,12 +28,6 @@ RUN wget https://github.com/conda-forge/miniforge/releases/latest/download/Minif
     echo ". /root/miniforge3/etc/profile.d/conda.sh" >> ~/.bashrc && \
     echo "conda activate base" >> ~/.bashrc && \
     . /root/miniforge3/etc/profile.d/conda.sh && conda activate base && python3 -m pip install --upgrade pip
-RUN conda create -y -n py38 python=3.8
-RUN conda create -y -n py39 python=3.9
-RUN conda create -y -n py310 python=3.10
-RUN conda create -y -n py311 python=3.11
-RUN conda create -y -n py311 python=3.12
-RUN conda init bash
 
 RUN yum update -y && yum install -y epel-release cmake3 && \
     yum remove -y cmake && \
@@ -49,6 +43,13 @@ RUN yum update -y && yum install -y epel-release cmake3 && \
     rm -rf /var/cache/yum
 
 RUN yum update -y && yum install -y SDL2-devel && rm -rf /var/cache/yum
+
+RUN conda create -y -n py38 python=3.8
+RUN conda create -y -n py39 python=3.9
+RUN conda create -y -n py310 python=3.10
+RUN conda create -y -n py311 python=3.11
+RUN conda create -y -n py312 python=3.12
+RUN conda init bash
 
 ADD entry.sh /bin/entry.sh
 ENTRYPOINT ["/bin/entry.sh"]
