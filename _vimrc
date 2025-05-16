@@ -1,3 +1,9 @@
+" test this vimrc:
+"     \vim -u _vimrc _vimrc
+
+let mapleader = ","
+xnoremap <leader>p "_dP
+
 set nu
 set expandtab ts=4 sw=4 sts=4 ai
 set encoding=utf-8
@@ -6,6 +12,7 @@ set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,chinese,cp936
 set nocompatible
 set cursorline
+set hlsearch
 set ruler
 set backspace=indent,eol,start
 set history=1000
