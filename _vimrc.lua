@@ -43,7 +43,7 @@ vim.opt.shiftwidth = 4            -- 自动缩进宽度为4
 vim.opt.softtabstop = 4           -- 按下Tab键时插入4个空格
 vim.opt.autoindent = true         -- 自动缩进
 vim.opt.iskeyword:remove("_")     -- 将下划线视为单词分隔符
-vim.opt.paste = true              -- 启用粘贴模式，防止粘贴时自动缩进
+-- vim.opt.paste = true              -- 启用粘贴模式，防止粘贴时自动缩进；和 expandtab 冲突
 
 ----------------------------------------------------------------------
 -- => 搜索设置
