@@ -1,5 +1,6 @@
 ----------------------------------------------------------------------
 -- Neovim 配置文件 (从Vim配置迁移)
+-- 测试方法: \nvim -u _vimrc.lua _vimrc.lua
 -- https://github.com/cubao/build-envs/blob/dev/_vimrc.lua
 ----------------------------------------------------------------------
 
@@ -42,6 +43,7 @@ vim.opt.shiftwidth = 4            -- 自动缩进宽度为4
 vim.opt.softtabstop = 4           -- 按下Tab键时插入4个空格
 vim.opt.autoindent = true         -- 自动缩进
 vim.opt.iskeyword:remove("_")     -- 将下划线视为单词分隔符
+vim.opt.paste = true              -- 启用粘贴模式，防止粘贴时自动缩进
 
 ----------------------------------------------------------------------
 -- => 搜索设置
@@ -91,4 +93,19 @@ end
 vim.keymap.set("v", "*", function() visual_selection('f') end, {silent = true})
 vim.keymap.set("v", "#", function() visual_selection('b') end, {silent = true})
 vim.keymap.set("v", "gv", function() visual_selection('gv') end, {silent = true})
-vim.keymap.set("v", "r", function() visual_selection('replace') end, {silent = true}) 
+vim.keymap.set("v", "r", function() visual_selection('replace') end, {silent = true})
+
+-- for macOS: command-v
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+
+vim.g.neovide_position_animation_length = 0
+vim.g.neovide_cursor_animation_length = 0.00
+vim.g.neovide_cursor_trail_size = 0
+vim.g.neovide_cursor_animate_in_insert_mode = false
+vim.g.neovide_cursor_animate_command_line = false
+vim.g.neovide_scroll_animation_far_lines = 0
+vim.g.neovide_scroll_animation_length = 0.00
+vim.g.neovide_input_use_logo = 1
