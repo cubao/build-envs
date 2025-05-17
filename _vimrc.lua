@@ -1,6 +1,7 @@
 ----------------------------------------------------------------------
 -- Neovim 配置文件 (从Vim配置迁移)
 -- 测试方法: \nvim -u _vimrc.lua _vimrc.lua
+-- 安装：见 make install_vimrc
 -- https://github.com/cubao/build-envs/blob/dev/_vimrc.lua
 ----------------------------------------------------------------------
 
