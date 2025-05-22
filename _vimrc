@@ -1,6 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim 配置文件
 " 测试方法: \vim -u _vimrc _vimrc
+" 安装：见 make install_vimrc
 " https://github.com/cubao/build-envs/blob/dev/_vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -10,7 +11,7 @@
 set nocompatible              " 使用vim的高级特性
 let mapleader=","             " 设置leader键为逗号
 set history=1000              " 命令历史记录数量
-set autoread                  " 当文件在外部被修改时自动重新读取
+" set autoread                  " 当文件在外部被修改时自动重新读取
 set backspace=indent,eol,start " 允许在这些情况下使用退格键
 set mouse=""                  " 禁用鼠标
 language messages en_US.utf-8 " 设置消息语言
@@ -43,6 +44,7 @@ set shiftwidth=4              " 自动缩进宽度为4
 set softtabstop=4             " 按下Tab键时插入4个空格
 set ai                        " 自动缩进
 set iskeyword-=_              " 将下划线视为单词分隔符
+" set paste                     " 启用粘贴模式，防止粘贴时自动缩进；
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => 搜索设置
