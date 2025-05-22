@@ -69,6 +69,9 @@ install_vimrc:
 	ln -sf `pwd`/_vimrc ~/.vimrc
 	ln -sf `pwd`/_vimrc.lua ~/.config/nvim/init.lua
 
+install_tmux:
+	ln -sf `pwd`/tmux.conf ~/.tmux.conf
+
 # https://stackoverflow.com/a/25817631
 echo-%  : ; @echo -n $($*)
 Echo-%  : ; @echo $($*)
