@@ -96,8 +96,10 @@ vim.keymap.set("v", "#", function() visual_selection('b') end, {silent = true})
 vim.keymap.set("v", "gv", function() visual_selection('gv') end, {silent = true})
 vim.keymap.set("v", "r", function() visual_selection('replace') end, {silent = true})
 
--- for macOS: command-v
+-- for macOS: command-c command-v
+vim.api.nvim_set_keymap('v', '<D-c>', '"+y', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<D-v>', '<C-R>+', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
