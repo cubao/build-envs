@@ -14,7 +14,8 @@ set history=1000              " 命令历史记录数量
 " set autoread                  " 当文件在外部被修改时自动重新读取
 set backspace=indent,eol,start " 允许在这些情况下使用退格键
 set mouse=""                  " 禁用鼠标
-language messages en_US.utf-8 " 设置消息语言
+" language messages en_US.utf-8 " 设置消息语言
+colorscheme morning
 
 " 关闭备份文件和交换文件
 set nobackup
