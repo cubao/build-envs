@@ -14,7 +14,8 @@ vim.opt.history = 1000            -- 命令历史记录数量
 -- vim.opt.autoread = true           -- 当文件在外部被修改时自动重新读取
 -- backspace 在 Neovim 中已默认设置，无需再设置
 vim.opt.mouse = ""                -- 禁用鼠标
-vim.opt.langmenu = "en_US.UTF-8"  -- 设置语言 (使用 Neovim 中更新的方式)
+-- vim.opt.langmenu = "en_US.UTF-8"  -- 设置语言 (使用 Neovim 中更新的方式)
+vim.cmd("colorscheme morning")
 
 -- 关闭备份文件和交换文件
 vim.opt.backup = false
