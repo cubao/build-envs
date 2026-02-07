@@ -26,10 +26,7 @@ set noswapfile
 " => 界面与显示设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nu                        " 显示行号
-set cursorline                " 高亮当前行
-" set nocursorline
-set t_Co=256
-hi CursorLine cterm=NONE ctermbg=236 guibg=Grey40
+set nocursorline
 set ruler                     " 在状态栏显示光标位置
 set showcmd                   " 在状态栏显示正在输入的命令
 set showmatch                 " 高亮显示匹配的括号
