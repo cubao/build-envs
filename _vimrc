@@ -27,6 +27,9 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nu                        " 显示行号
 set cursorline                " 高亮当前行
+" set nocursorline
+set t_Co=256
+hi CursorLine cterm=NONE ctermbg=236 guibg=Grey40
 set ruler                     " 在状态栏显示光标位置
 set showcmd                   " 在状态栏显示正在输入的命令
 set showmatch                 " 高亮显示匹配的括号
@@ -46,6 +49,7 @@ set softtabstop=4             " 按下Tab键时插入4个空格
 set ai                        " 自动缩进
 set iskeyword-=_              " 将下划线视为单词分隔符
 " set paste                     " 启用粘贴模式，防止粘贴时自动缩进；
+autocmd FileType make setlocal noexpandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => 搜索设置
@@ -83,14 +87,14 @@ function! VisualSelection(direction) range
     let l:saved_reg = @"
     execute "normal! vgvy"
     let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "") 
-    if a:direction == 'b' 
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+    if a:direction == 'b'
         execute "normal ?" . l:pattern . "^M"
     elseif a:direction == 'gv'
         call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
     elseif a:direction == 'replace'
         call CmdLine("%s" . '/'. l:pattern . '/')
-    elseif a:direction == 'f' 
+    elseif a:direction == 'f'
         execute "normal /" . l:pattern . "^M"
     endif
     let @/ = l:pattern
@@ -101,3 +105,13 @@ endfunction
 function! CmdLine(str)
     call feedkeys(":" . a:str)
 endfunction
+
+if &term =~ 'xterm' || &term =~ 'screen' || &term =~ 'tmux'
+  let &t_BE = "\<Esc>[?2004h"
+  let &t_BD = "\<Esc>[?2004l"
+  let &t_PS = "\<Esc>[200~"
+  let &t_PE = "\<Esc>[201~"
+endif
+
+autocmd BufReadCmd *.whl call zip#Browse(expand("<amatch>"))
+
